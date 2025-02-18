@@ -92,16 +92,19 @@ public class SwiftService {
         }
     }
 
-    public String addSwiftCode(SwiftData swiftData) {
+    public Map<String,String> addSwiftCode(SwiftData swiftData) {
         StringUtils.capitalizeAllStringFields(swiftData);
-
+        Map<String,String> response = new HashMap<>();
         String key = "swift:" + swiftData.getSwiftCode();
         if (!jedis.exists(key)) {
             redisClient.set(key, swiftData);
             String countryResponse = addCountrySwift(swiftData);
-            return "Swift code added successfully!" + countryResponse;
+            response.put("message","Swift code added successfully. "+countryResponse);
         }
-        return "Swift code already exists in database";
+        else {
+            response.put("message","Swift code already exists in database");
+        }
+        return response;
     }
 
     public String addCountrySwift(SwiftData swiftData) {
@@ -119,8 +122,8 @@ public class SwiftService {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    public String deleteSwiftCode(String swiftCode) {
+
+    public Map<String,String> deleteSwiftCode(String swiftCode) {
         String key = "swift:" + swiftCode;
         try{
             SwiftData data = redisClient.get(key, SwiftData.class);
@@ -129,7 +132,7 @@ public class SwiftService {
             swiftCodes.remove(swiftCode);
             redisClient.set(countryKey, swiftCodes, Path.of(".swiftCodes"));
             redisClient.del(key);
-            return "Deleted successfully";
+            return Map.of("message","Swift Code deleted successfully");
         }
         catch (Exception e)
         {

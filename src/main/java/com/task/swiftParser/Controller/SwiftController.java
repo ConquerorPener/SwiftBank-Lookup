@@ -5,7 +5,6 @@ import com.task.swiftParser.Dto.HQRequest;
 import com.task.swiftParser.Model.SwiftData;
 import com.task.swiftParser.Service.SwiftService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class SwiftController {
     SwiftService swiftService;
 
     @GetMapping("/{swiftCode}")
-    public ResponseEntity<?> getSwiftDetails(
+    public ResponseEntity<HQRequest> getSwiftDetails(
             @PathVariable("swiftCode") String swiftCode
     )
     {
@@ -27,7 +26,7 @@ public class SwiftController {
     }
 
     @GetMapping("/country/{countryISO2code}")
-    public ResponseEntity<?> getCountryDetails(
+    public ResponseEntity<CountryRequest> getCountryDetails(
             @PathVariable("countryISO2code") String countryISO2code
     )
     {
@@ -35,7 +34,7 @@ public class SwiftController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> addSwiftCode(
+    public ResponseEntity<Map<String,String>> addSwiftCode(
             @RequestBody SwiftData swiftData
             )
     {
@@ -43,7 +42,7 @@ public class SwiftController {
     }
 
     @DeleteMapping("/{swiftCode}")
-    public ResponseEntity<String> deleteSwiftCode(
+    public ResponseEntity<Map<String,String>> deleteSwiftCode(
           @PathVariable("swiftCode") String swiftCode
     )
     {
