@@ -25,6 +25,11 @@ public class SwiftParserApplication{
 		SpringApplication.run(SwiftParserApplication.class, args);
 	}
 
+
+	//THIS PART OF CODE IMPORTS RECORDS FROM .CSV APPENDED TO THE TASK IF DATABASE IS EMPTY.
+	//COMMENT OR DELETE CODE BELOW IN ORDER TO USE APPLICATION WITHOUT THIS FEATURE.
+	//YOU MAY ALSO DELETE CsvImporter.java FROM UTIL DIRECTORY AND swift_codes.csv FROM RESOURCES DIR.
+
 	@Async
 	@EventListener(ContextRefreshedEvent.class)
 	public void importDataIfEmpty() {
