@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Swift Codes Suite">
+    <test name="Unit Tests">
+        <classes>
+            <class name="com.task.swiftParser.Service.SwiftServiceTest"/>
+        </classes>
+    </test>
+    <test name="Integration Tests">
+        <classes>
+            <class name="com.task.swiftParser.Controller.SwiftControllerTest"/>
+        </classes>
+    </test>
+</suite>

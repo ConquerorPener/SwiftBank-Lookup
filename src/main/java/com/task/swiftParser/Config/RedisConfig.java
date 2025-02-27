@@ -1,6 +1,5 @@
 package com.task.swiftParser.Config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redislabs.modules.rejson.JReJSON;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
