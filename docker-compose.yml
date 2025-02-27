@@ -1,0 +1,36 @@
+version: '3.8'
+
+name: swift 
+
+services:
+  backend:
+    build:
+      context: ./src
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    volumes:
+      - ./src:/app
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
+    networks:
+      - swift-internal-network
+
+  redis:
+    image: redislabs/rejson:latest
+    container_name: redis
+    hostname: redis
+    volumes:
+      - ./.docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    networks:
+      - swift-internal-network
+
+networks:
+  swift-internal-network:
+    name: swift-internal-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.50.0/24
