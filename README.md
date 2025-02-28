@@ -165,6 +165,30 @@ Run tests using Maven:
 Exit the container:
 >$ exit
 
+
+## Data Import
+
+The application imports all data from a spreadsheet by default to enhance testing and user experience.
+
+If you want to disable this feature, follow these steps:
+
+1. Delete CsvImporter.java from Util directory
+2. Remove swift_codes.csv from Resources directory
+3. Override SwiftParserApplication as follows:
+```
+package com.task.swiftParser;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SwiftParserApplication{
+	public static void main(String[] args) {
+		SpringApplication.run(SwiftParserApplication.class, args);
+	}
+}
+```
+   
 ## Contributing
 
 ### Feel free to fork the repository and submit a pull request!
