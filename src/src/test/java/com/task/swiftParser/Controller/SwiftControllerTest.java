@@ -37,7 +37,7 @@ public class SwiftControllerTest {
 
     @Test
     public void testGetSwiftDetails_Success() throws Exception {
-        String swiftCode = "TESTUS33";
+        String swiftCode = "ALBPPLP1XXX";
         HQRequest mockResponse = new HQRequest();
         mockResponse.setSwiftCode(swiftCode);
 
@@ -95,12 +95,15 @@ public class SwiftControllerTest {
         swiftData.setSwiftCode("ALBPPLP1XXX");
         swiftData.setCountryISO2("PL");
         swiftData.setCountryName("Poland");
+        swiftData.setBankName("ALIOR BANK SPOLKA AKCYJNA");
+        swiftData.setAddress("WARSZAWA, MAZOWIECKIE");
+        swiftData.setHeadquarter(true);
 
         when(swiftService.addSwiftCode(swiftData)).thenReturn(Map.of("message", "Swift code added successfully"));
 
         mockMvc.perform(post("/v1/swift-codes")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"swiftCode\": \"ALBPPLP1XXX\", \"countryISO2\": \"PL\", \"countryName\": \"Poland\"}"))
+                        .content("{\"swiftCode\": \"ALBPPLP1XXX\", \"countryISO2\": \"PL\", \"countryName\": \"Poland\", \"bankName\": \"ALIOR BANK SPOLKA AKCYJNA\", \"address\": \"WARSZAWA, MAZOWIECKIE\", \"isHeadquarter\": true}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Swift code added successfully"));
     }
@@ -111,12 +114,15 @@ public class SwiftControllerTest {
         swiftData.setSwiftCode("ALBPPLP1XXX");
         swiftData.setCountryISO2("PL");
         swiftData.setCountryName("Poland");
+        swiftData.setBankName("ALIOR BANK SPOLKA AKCYJNA");
+        swiftData.setAddress("WARSZAWA, MAZOWIECKIE");
+        swiftData.setHeadquarter(true);
 
         when(swiftService.addSwiftCode(swiftData)).thenReturn(Map.of("message", "Swift code already exists in database"));
 
         mockMvc.perform(post("/v1/swift-codes")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"swiftCode\": \"ALBPPLP1XXX\", \"countryISO2\": \"PL\", \"countryName\": \"Poland\"}"))
+                        .content("{\"swiftCode\": \"ALBPPLP1XXX\", \"countryISO2\": \"PL\", \"countryName\": \"Poland\", \"bankName\": \"ALIOR BANK SPOLKA AKCYJNA\", \"address\": \"WARSZAWA, MAZOWIECKIE\", \"isHeadquarter\": true}"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("Swift code already exists in database"));
     }

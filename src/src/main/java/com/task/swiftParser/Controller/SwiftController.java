@@ -4,15 +4,18 @@ import com.task.swiftParser.Dto.CountryRequest;
 import com.task.swiftParser.Dto.HQRequest;
 import com.task.swiftParser.Model.SwiftData;
 import com.task.swiftParser.Service.SwiftService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/swift-codes")
+@Validated
 public class SwiftController {
 
     @Autowired
@@ -47,7 +50,7 @@ public class SwiftController {
 
     @PostMapping("")
     public ResponseEntity<Map<String,String>> addSwiftCode(
-            @RequestBody SwiftData swiftData
+            @Valid @RequestBody SwiftData swiftData
             )
     {
         Map<String ,String> response = swiftService.addSwiftCode(swiftData);

@@ -10,6 +10,7 @@ import com.task.swiftParser.Exception.SwiftNotFoundException;
 import com.task.swiftParser.Model.CountryData;
 import com.task.swiftParser.Model.SwiftData;
 import com.task.swiftParser.Util.StringUtils;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -92,9 +93,18 @@ public class SwiftService {
         }
     }
 
-    public Map<String,String> addSwiftCode(SwiftData swiftData) {
+    public Map<String,String> addSwiftCode(@Valid SwiftData swiftData) {
         StringUtils.capitalizeAllStringFields(swiftData);
         Map<String,String> response = new HashMap<>();
+
+        if (swiftData.getSwiftCode().endsWith("XXX") && !swiftData.isHeadquarter()) {
+            response.put("message", "If swiftCode ends with 'XXX', isHeadquarter must be true");
+            return response;
+        } else if (!swiftData.getSwiftCode().endsWith("XXX") && swiftData.isHeadquarter()) {
+            response.put("message", "If swiftCode does not end with 'XXX', isHeadquarter must be false");
+            return response;
+        }
+
         String key = "swift:" + swiftData.getSwiftCode();
         if (!jedis.exists(key)) {
             redisClient.set(key, swiftData);

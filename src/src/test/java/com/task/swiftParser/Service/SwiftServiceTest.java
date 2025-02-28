@@ -134,11 +134,12 @@ public class SwiftServiceTest {
 
 
     @Test
-    public void testAddSwiftCode_NewSwiftCode() {
+    public void testAddSwiftCode_ValidHeadquarter() {
         SwiftData swiftData = new SwiftData();
         swiftData.setSwiftCode("ALBPPLP1XXX");
         swiftData.setCountryISO2("PL");
         swiftData.setCountryName("Poland");
+        swiftData.setHeadquarter(true);
 
         when(jedis.exists("swift:ALBPPLP1XXX")).thenReturn(false);
         doNothing().when(redisClient).set(anyString(), any(SwiftData.class));
@@ -148,12 +149,14 @@ public class SwiftServiceTest {
         Assert.assertTrue(result.get("message").contains("Swift code added successfully"), "Success message should appear");
     }
 
+
     @Test
     public void testAddSwiftCode_ExistingSwiftCode() {
         SwiftData swiftData = new SwiftData();
         swiftData.setSwiftCode("ALBPPLP1XXX");
         swiftData.setCountryISO2("PL");
         swiftData.setCountryName("Poland");
+        swiftData.setHeadquarter(true);
 
         when(jedis.exists("swift:ALBPPLP1XXX")).thenReturn(true);
         doNothing().when(redisClient).set(anyString(), any(SwiftData.class));
@@ -162,6 +165,7 @@ public class SwiftServiceTest {
         Assert.assertNotNull(result, "Returned Map cannot be null");
         Assert.assertTrue(result.get("message").contains("Swift code already exists in database"), "Failure message should appear");
     }
+
 
     @Test
     public void testAddCountrySwift_NewCountry() {
