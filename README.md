@@ -35,7 +35,7 @@
 
 2. Once the process is complete, navigate to the project directory:
 
->$ cd SwiftBack-Lookup
+>$ cd SwiftBank-Lookup
 
 ## Running Docker Containers
 
