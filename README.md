@@ -25,23 +25,30 @@
 
 ### Prerequisites
 
-1. Java 17+
-
-2. Redis with RedisJSON module installed
-
-3. Docker
+1. Git
+2. Docker with Docker Compose
 
 ## Clone the repository
+1. Open a terminal and run the following command to clone the repository:
 
 >$ git clone https://github.com/ConquerorPener/swiftbank-lookup.git</br>
->$ cd Swift
 
-## Configure and start application
+2. Once the process is complete, navigate to the project directory:
 
-    ------TODO!-------
+>$ cd SwiftBack-Lookup
 
+## Running Docker Containers
+
+Now, you can start the application using Docker Compose:
+
+
+>$ docker compose up
+
+After a while, application will be ready to accept connections
 
 # API Endpoints
+
+After starting your application you can access all endpoints that are listed below.
 
 ## Get SWIFT details
 
@@ -134,6 +141,29 @@
     "error": String
 }
 ```
+
+## Unit & Integration testing
+
+This application is tested by 19 unit and integration tests that are available in src/src/test/ directory.
+
+They run every build of application, but you can also run them by yourself.
+
+To achieve that you have to follow those steps:
+
+Navigate to project directory (SwiftBank-Lookup):
+>$ cd SwiftBank-Lookup
+
+Start the application with Docker Compose:
+>$ docker compose up
+
+access the backend container:
+>$ docker exec -it backend bash
+
+Run tests using Maven:
+>$ mvn test
+
+Exit the container:
+>$ exit
 
 ## Contributing
 
